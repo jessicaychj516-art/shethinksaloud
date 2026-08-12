@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>She Thinks Aloud — Jessica</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1c1814;
+    --paper: #f6f1e9;
+    --warm: #c4a47a;
+    --muted: #8a7f74;
+    --accent: #2d4a3e;
+    --light: #eee8dc;
+    --spirit: #6b5b7b;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(246,241,233,0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(26,23,20,0.06);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-size: 0.73rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+
+  .nav-book {
+    background: var(--ink) !important;
+    color: var(--paper) !important;
+    padding: 0.55rem 1.4rem;
+    transition: background 0.3s !important;
+  }
+
+  .nav-book:hover { background: var(--accent) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10rem 4rem 7rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(107,91,123,0.07) 0%, transparent 70%);
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 780px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 5.5vw, 5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-title em { font-style: italic; color: var(--spirit); }
+
+  .hero-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--warm);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.55s forwards;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 520px;
+    margin-bottom: 3.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.65s forwards;
+  }
+
+  .hero-sub strong { color: var(--ink); font-weight: 400; }
+
+  .hero-approach {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.75s forwards;
+  }
+
+  .hero-approach-pill {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(26,23,20,0.15);
+    color: var(--muted);
+  }
+
+  .hero-approach-divider {
+    width: 20px;
+    height: 1px;
+    background: var(--warm);
+    opacity: 0.5;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.85s forwards;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1rem 2.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.76rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+
+  .btn-ghost {
+    color: var(--muted);
+    padding: 1rem 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.76rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-bottom: 1px solid rgba(138,127,116,0.3);
+    transition: color 0.3s, border-color 0.3s;
+  }
+
+  .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* TWO SPACES */
+  .two-spaces {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 9rem 4rem;
+  }
+
+  .two-spaces-inner { max-width: 1050px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 3.5rem;
+    display: block;
+  }
+
+  .two-spaces-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.25;
+    max-width: 680px;
+    margin-bottom: 6rem;
+  }
+
+  .two-spaces-intro em { font-style: italic; color: var(--warm); }
+
+  .spaces-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid rgba(245,240,232,0.1);
+  }
+
+  .space-card {
+    padding: 4rem 4rem 4rem 0;
+    border-bottom: 1px solid rgba(245,240,232,0.08);
+  }
+
+  .space-card:nth-child(even) {
+    padding-left: 4rem;
+    padding-right: 0;
+    border-left: 1px solid rgba(245,240,232,0.08);
+  }
+
+  .space-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: rgba(196,164,122,0.15);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .space-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .space-desc {
+    font-size: 0.88rem;
+    line-height: 1.95;
+    color: rgba(245,240,232,0.5);
+    font-weight: 300;
+  }
+
+  .space-desc strong { color: rgba(245,240,232,0.85); font-weight: 400; }
+
+  .spaces-truth {
+    margin-top: 5rem;
+    padding: 3rem;
+    border: 1px solid rgba(196,164,122,0.2);
+    background: rgba(196,164,122,0.04);
+    text-align: center;
+  }
+
+  .spaces-truth-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: rgba(245,240,232,0.8);
+    margin-bottom: 0.5rem;
+  }
+
+  .spaces-truth-attr {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm);
+    opacity: 0.7;
+  }
+
+  /* HOW I WORK */
+  .offer {
+    padding: 9rem 4rem;
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .offer::before {
+    content: '见';
+    position: absolute;
+    right: -1rem;
+    bottom: -4rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22rem;
+    color: rgba(107,91,123,0.05);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .offer-inner {
+    max-width: 1050px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 8rem;
+    align-items: start;
+    position: relative;
+    z-index: 2;
+  }
+
+  .offer-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+  }
+
+  .offer-title em { font-style: italic; color: var(--spirit); }
+
+  .offer-body {
+    font-size: 0.9rem;
+    line-height: 1.95;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  .offer-body strong { color: var(--ink); font-weight: 500; }
+
+  .offer-philosophy {
+    margin-top: 2.5rem;
+    padding: 2rem;
+    background: var(--light);
+    border-left: 3px solid var(--warm);
+  }
+
+  .offer-philosophy-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+
+  .offer-philosophy-attr {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--warm);
+  }
+
+  .offer-list { display: flex; flex-direction: column; }
+
+  .offer-item {
+    padding: 2.2rem 0;
+    border-bottom: 1px solid rgba(26,23,20,0.08);
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1.2rem;
+    align-items: start;
+  }
+
+  .offer-item-icon {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--warm);
+    line-height: 1.3;
+  }
+
+  .offer-item-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .offer-item-text {
+    font-size: 0.82rem;
+    line-height: 1.85;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* DISTINCTION */
+  .distinction {
+    background: var(--light);
+    padding: 5rem 4rem;
+    text-align: center;
+  }
+
+  .distinction-inner { max-width: 700px; margin: 0 auto; }
+
+  .distinction-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 300;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+  }
+
+  .distinction-title em { font-style: italic; color: var(--spirit); }
+
+  .distinction-text {
+    font-size: 0.88rem;
+    line-height: 1.9;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* SESSIONS */
+  .sessions {
+    padding: 9rem 4rem;
+    background: var(--paper);
+  }
+
+  .sessions-inner { max-width: 1050px; margin: 0 auto; }
+
+  .sessions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(26,23,20,0.08);
+  }
+
+  .sessions-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.2;
+  }
+
+  .sessions-title em { font-style: italic; color: var(--accent); }
+
+  .sessions-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 220px;
+  }
+
+  /* PRICING CARDS */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .pricing-card {
+    border: 1px solid rgba(26,23,20,0.1);
+    padding: 2.5rem;
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+    background: var(--paper);
+  }
+
+  .pricing-card:hover {
+    border-color: var(--warm);
+    transform: translateY(-4px);
+  }
+
+  .pricing-card.featured {
+    border-color: var(--accent);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .pricing-card.featured .pricing-desc { color: rgba(245,240,232,0.55); }
+  .pricing-card.featured .pricing-currency { color: rgba(245,240,232,0.4); }
+  .pricing-card.featured .pricing-includes-title { color: rgba(245,240,232,0.5); }
+  .pricing-card.featured .pricing-include-item { color: rgba(245,240,232,0.65); }
+  .pricing-card.featured .pricing-include-item::before { color: var(--warm); }
+  .pricing-card.featured .pricing-savings { background: rgba(196,164,122,0.15); border-color: rgba(196,164,122,0.3); }
+  .pricing-card.featured .pricing-savings-text { color: var(--warm); }
+  .pricing-card.featured .value-row { border-color: rgba(245,240,232,0.08); }
+  .pricing-card.featured .value-label { color: rgba(245,240,232,0.4); }
+  .pricing-card.featured .value-amount { color: rgba(245,240,232,0.7); }
+  .pricing-card.featured .value-total-label { color: rgba(245,240,232,0.6); }
+  .pricing-card.featured .value-total-amount { color: var(--warm); }
+
+  .pricing-badge {
+    position: absolute;
+    top: -1px;
+    right: 2rem;
+    background: var(--warm);
+    color: var(--ink);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    font-weight: 500;
+  }
+
+  .pricing-tier {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 1rem;
+  }
+
+  .pricing-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .pricing-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.8rem;
+    font-weight: 300;
+  }
+
+  .pricing-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .pricing-currency {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pricing-currency span {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .pricing-divider {
+    height: 1px;
+    background: rgba(26,23,20,0.08);
+    margin: 1.5rem 0;
+  }
+
+  .pricing-card.featured .pricing-divider { background: rgba(245,240,232,0.1); }
+
+  .pricing-includes-title {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .pricing-includes { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .pricing-include-item {
+    font-size: 0.8rem;
+    color: var(--ink);
+    font-weight: 300;
+    line-height: 1.5;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .pricing-include-item::before {
+    content: '◈';
+    position: absolute;
+    left: 0;
+    color: var(--warm);
+    font-size: 0.6rem;
+    top: 0.15rem;
+  }
+
+  .pricing-include-item.bonus {
+    color: var(--warm);
+    font-weight: 400;
+  }
+
+  .pricing-card.featured .pricing-include-item.bonus { color: var(--warm); }
+
+  /* VALUE BREAKDOWN */
+  .value-breakdown {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(26,23,20,0.08);
+  }
+
+  .value-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(26,23,20,0.05);
+  }
+
+  .value-label { font-size: 0.72rem; color: var(--muted); font-weight: 300; }
+  .value-amount { font-size: 0.72rem; color: var(--muted); font-weight: 300; text-decoration: line-through; opacity: 0.6; }
+
+  .value-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.6rem;
+    margin-top: 0.3rem;
+  }
+
+  .value-total-label { font-size: 0.72rem; font-weight: 500; color: var(--ink); }
+  .value-total-amount { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--accent); font-weight: 400; }
+
+  .pricing-savings {
+    margin-top: 1.2rem;
+    padding: 0.8rem 1rem;
+    background: rgba(45,74,62,0.06);
+    border: 1px solid rgba(45,74,62,0.15);
+    text-align: center;
+  }
+
+  .pricing-savings-text {
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  /* SINGLE SESSION ROWS */
+  .single-sessions {
+    margin-bottom: 2rem;
+    border: 1px solid rgba(26,23,20,0.1);
+    padding: 2.5rem;
+  }
+
+  .single-sessions-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    margin-bottom: 0.4rem;
+  }
+
+  .single-sessions-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .single-session-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .single-option {
+    padding: 1.2rem;
+    border: 1px solid rgba(26,23,20,0.08);
+    background: var(--light);
+  }
+
+  .single-option-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    margin-bottom: 0.3rem;
+  }
+
+  .single-option-prices {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .single-option-price-main {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--accent);
+  }
+
+  .single-option-price-alt {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* FREE BANNER */
+  .sessions-free {
+    background: var(--accent);
+    color: var(--paper);
+    padding: 2.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .sessions-free-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    font-weight: 300;
+    margin-bottom: 0.3rem;
+  }
+
+  .sessions-free-sub {
+    font-size: 0.72rem;
+    color: rgba(245,240,232,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  .sessions-free-btn {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 0.85rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.3s, color 0.3s;
+    flex-shrink: 0;
+  }
+
+  .sessions-free-btn:hover { background: var(--warm); color: var(--paper); }
+
+  /* CONTACT */
+  .contact {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 9rem 4rem;
+  }
+
+  .contact-inner {
+    max-width: 1050px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+  }
+
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-title em { font-style: italic; color: var(--warm); }
+
+  .contact-body {
+    font-size: 0.87rem;
+    line-height: 1.9;
+    color: rgba(245,240,232,0.5);
+    font-weight: 300;
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-cn {
+    font-size: 0.82rem;
+    color: var(--warm);
+    letter-spacing: 0.06em;
+    margin-bottom: 2.5rem;
+    opacity: 0.8;
+  }
+
+  .contact-links { display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.82rem;
+    color: rgba(245,240,232,0.4);
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 300;
+  }
+
+  .contact-link:hover { color: var(--warm); }
+
+  .contact-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--warm);
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .form-group { margin-bottom: 2rem; }
+
+  .form-label {
+    display: block;
+    font-size: 0.63rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.3);
+    margin-bottom: 0.75rem;
+  }
+
+  .form-input, .form-textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(245,240,232,0.12);
+    padding: 0.75rem 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: var(--paper);
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(245,240,232,0.18); }
+  .form-input:focus, .form-textarea:focus { border-color: var(--warm); }
+  .form-textarea { resize: none; height: 85px; }
+
+  .form-submit {
+    width: 100%;
+    background: var(--warm);
+    color: var(--ink);
+    border: none;
+    padding: 1.1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.73rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.3s;
+    font-weight: 500;
+  }
+
+  .form-submit:hover { background: var(--paper); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(245,240,232,0.06);
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: rgba(245,240,232,0.3);
+  }
+
+  .footer-copy { font-size: 0.68rem; color: rgba(245,240,232,0.18); letter-spacing: 0.07em; }
+
+  .footer-links { display: flex; gap: 2rem; }
+
+  .footer-links a {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.25);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--warm); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 8rem 1.5rem 5rem; }
+    .two-spaces { padding: 6rem 1.5rem; }
+    .spaces-grid { grid-template-columns: 1fr; }
+    .space-card:nth-child(even) { padding-left: 0; border-left: none; }
+    .offer { padding: 6rem 1.5rem; }
+    .offer-inner { grid-template-columns: 1fr; gap: 4rem; }
+    .distinction { padding: 4rem 1.5rem; }
+    .sessions { padding: 6rem 1.5rem; }
+    .sessions-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .sessions-note { text-align: left; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .single-session-options { grid-template-columns: 1fr; }
+    .sessions-free { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+    .contact { padding: 6rem 1.5rem; }
+    .contact-inner { grid-template-columns: 1fr; gap: 4rem; }
+    footer { flex-direction: column; gap: 1.2rem; text-align: center; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">She Thinks Aloud</a>
+  <ul class="nav-links">
+    <li><a href="#two-spaces">The Two Spaces</a></li>
+    <li><a href="#offer">How I Work</a></li>
+    <li><a href="#sessions">Sessions</a></li>
+    <li><a href="#contact" class="nav-book">Book Free Call</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Jessica · She Thinks Aloud · Clarity Work</p>
+    <h1 class="hero-title">
+      The gap between<br>
+      where you are<br>
+      and where you <em>sense</em><br>
+      you could be.
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">
+      That gap is not a failure of ambition.<br>
+      It's not a lack of intelligence.<br>
+      <strong>It's the most important territory in your life — and almost no one knows how to work in it.</strong>
+    </p>
+    <div class="hero-approach">
+      <span class="hero-approach-pill">Psychology</span>
+      <span class="hero-approach-divider"></span>
+      <span class="hero-approach-pill">Philosophy</span>
+      <span class="hero-approach-divider"></span>
+      <span class="hero-approach-pill">Wisdom Traditions</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Start with a Free Call</a>
+      <a href="#two-spaces" class="btn-ghost">Is this you? →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FREE CALL BANNER -->
+<div style="background: var(--accent); color: var(--paper); padding: 1.8rem 4rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;">
+  <div>
+    <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-style: italic; font-weight: 300; margin-bottom: 0.3rem;">First conversation is always free — 20 minutes, no commitment.</div>
+    <div style="font-size: 0.82rem; color: rgba(245,240,232,0.6); letter-spacing: 0.05em;">首次通话完全免费，20分钟，无需承诺。欢迎用普通话交流。</div>
+  </div>
+  <a href="#contact" style="background: var(--paper); color: var(--ink); padding: 0.85rem 2rem; font-family: 'DM Sans', sans-serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; white-space: nowrap; flex-shrink: 0; transition: background 0.3s;" onmouseover="this.style.background='#c4a47a'; this.style.color='#f6f1e9';" onmouseout="this.style.background='#f6f1e9'; this.style.color='#1c1814';">Book Free Call · 免费预约</a>
+</div>
+
+<!-- TWO SPACES -->
+<section class="two-spaces" id="two-spaces">
+  <div class="two-spaces-inner">
+    <span class="section-label reveal">The Two Spaces I Work In</span>
+    <p class="two-spaces-intro reveal">
+      Most people who feel stuck are living inside <em>one of two specific tensions.</em> Both are real. Both are workable. But almost no one names them clearly.
+    </p>
+    <div class="spaces-grid">
+      <div class="space-card reveal">
+        <div class="space-num">I</div>
+        <div class="space-title">The System Has You — and You Don't Quite Know It Yet</div>
+        <p class="space-desc">
+          You're living by a script you didn't consciously choose. <strong>What you think you should want, who you think you should be</strong> — these were handed to you. By family. By society. By the shape of success everyone around you agreed on.<br><br>
+          Something in you resists. But the resistance has no name yet. So it shows up as anxiety, numbness, the feeling that you're doing everything right and something is still deeply wrong.
+        </p>
+      </div>
+      <div class="space-card reveal">
+        <div class="space-num">II</div>
+        <div class="space-title">You Feel Free — But You're Not Actually Moving</div>
+        <p class="space-desc">
+          You've broken from the script. <strong>You know what you want — or think you do.</strong> And you're still not getting there.<br><br>
+          This is the subtler trap. You feel free in your thinking, but something invisible holds the gap open between your vision and your reality. It's not laziness. It's not simple fear. It's something that needs to be seen — not fixed, not pushed through. Seen.
+        </p>
+      </div>
+    </div>
+    <div class="spaces-truth reveal">
+      <p class="spaces-truth-text">
+        The suffering isn't in the gap itself.<br>
+        It's in not being able to see it clearly.
+      </p>
+      <p class="spaces-truth-attr">— Jessica</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW I WORK -->
+<section class="offer" id="offer">
+  <div class="offer-inner">
+    <div class="offer-left">
+      <span class="section-label reveal">How I Work</span>
+      <h2 class="offer-title reveal">
+        Clarity work.<br>
+        Sometimes it touches<br>
+        something <em>deeper.</em>
+      </h2>
+      <p class="offer-body reveal">
+        I hold a psychology degree from UBC — but the way I work doesn't come from a single framework. I draw from <strong>psychology, Western and Eastern philosophy, sociology, history, spirituality, and cultural wisdom</strong> depending on what the moment calls for.
+      </p>
+      <p class="offer-body reveal">
+        I've studied widely and I think sharply. What matters isn't which knowledge system I use — it's whether it illuminates something true for you. Some sessions feel practical. Some feel philosophical. Some touch something spiritual. I follow what's actually happening in the room.
+      </p>
+      <p class="offer-body reveal">
+        The work can be deeply therapeutic without being therapy. It can be intellectually rigorous without being academic. It can be spiritual without being prescriptive. It is whatever it needs to be.
+      </p>
+      <div class="offer-philosophy reveal">
+        <p class="offer-philosophy-text">
+          I don't tell you where to go.<br>
+          I show you what the map looks like — and you choose.
+        </p>
+        <p class="offer-philosophy-attr">— Jessica</p>
+      </div>
+    </div>
+    <div class="offer-right">
+      <div class="offer-list">
+        <div class="offer-item reveal">
+          <div class="offer-item-icon">◈</div>
+          <div>
+            <div class="offer-item-title">Seeing beneath the analysis</div>
+            <p class="offer-item-text">You've probably already analyzed yourself extensively. I work in what analysis can't reach — the felt layer, the pattern underneath the pattern.</p>
+          </div>
+        </div>
+        <div class="offer-item reveal">
+          <div class="offer-item-icon">◈</div>
+          <div>
+            <div class="offer-item-title">Naming what hasn't been named</div>
+            <p class="offer-item-text">A lot of what keeps people stuck is pre-verbal. A feeling, a resistance, a pull toward something they can't articulate. Finding the right words is often the whole shift.</p>
+          </div>
+        </div>
+        <div class="offer-item reveal">
+          <div class="offer-item-icon">◈</div>
+          <div>
+            <div class="offer-item-title">From clarity to real movement</div>
+            <p class="offer-item-text">Not a plan — a direction. The smallest true move that points somewhere real. You may leave with more questions sometimes. But they'll finally be the right ones.</p>
+          </div>
+        </div>
+        <div class="offer-item reveal">
+          <div class="offer-item-icon">◈</div>
+          <div>
+            <div class="offer-item-title">Holding the spiritual dimension</div>
+            <p class="offer-item-text">Some of what you're carrying isn't psychological — it's existential. Questions of meaning, purpose, who you are when the noise stops. That territory is welcome here. 这里可以说中文。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SESSIONS & PRICING -->
+<section class="sessions" id="sessions">
+  <div class="sessions-inner">
+    <div class="sessions-header">
+      <h2 class="sessions-title reveal">Sessions &<br><em>Investment.</em></h2>
+      <p class="sessions-note reveal">Online · English and Mandarin<br>Global clients welcome</p>
+    </div>
+
+    <!-- INITIAL SESSION -->
+    <div class="single-sessions reveal" style="margin-bottom:1.5rem;">
+      <div class="pricing-tier">First Step</div>
+      <div class="single-sessions-title">Initial Session — 2 Hours</div>
+      <div class="single-sessions-sub">Your first official session. We go deep from the start — mapping the terrain, naming what's actually happening, and setting the direction. Two hours because first conversations deserve real space.</div>
+      <div class="single-session-options">
+        <div class="single-option">
+          <div class="single-option-name">C$250</div>
+          <div class="single-option-prices">
+            <span class="single-option-price-alt">≈ US$170</span>
+            <span class="single-option-price-alt">≈ ¥1,300 RMB</span>
+          </div>
+        </div>
+        <div class="single-option" style="background:var(--paper); border-color: rgba(26,23,20,0.12);">
+          <div class="single-option-name" style="font-size:0.82rem; font-family:'DM Sans',sans-serif; color:var(--muted); font-weight:300; line-height:1.7;">
+            Includes a written summary of key observations after the session. Sets the foundation for all work that follows — whether you continue or not.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SINGLE SESSIONS -->
+    <div class="single-sessions reveal" style="margin-bottom:1.5rem;">
+      <div class="pricing-tier">Ongoing</div>
+      <div class="single-sessions-title">Single Sessions</div>
+      <div class="single-sessions-sub">Book as needed. Minimum billing is one hour. Choose the length that fits what you're working through.</div>
+      <div class="single-session-options">
+        <div class="single-option">
+          <div class="single-option-name">1 Hour</div>
+          <div class="single-option-prices">
+            <div class="single-option-price-main">C$135</div>
+            <span class="single-option-price-alt">≈ US$92 &nbsp;·&nbsp; ≈ ¥680 RMB</span>
+          </div>
+        </div>
+        <div class="single-option">
+          <div class="single-option-name">2 Hours</div>
+          <div class="single-option-prices">
+            <div class="single-option-price-main">C$260</div>
+            <span class="single-option-price-alt">≈ US$177 &nbsp;·&nbsp; ≈ ¥1,300 RMB</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PACKAGES -->
+    <div class="pricing-grid">
+
+      <!-- MONTHLY -->
+      <div class="pricing-card reveal">
+        <div class="pricing-tier">Committed Work</div>
+        <div class="pricing-name">Monthly Container</div>
+        <p class="pricing-desc">8 hours of focused sessions per month, built around one clear theme. We make real progress — not random conversations.</p>
+        <div class="pricing-amount">C$1,000</div>
+        <div class="pricing-currency">
+          <span>≈ US$680</span>
+          <span>≈ ¥5,000 RMB</span>
+        </div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-includes-title">What's included</div>
+        <ul class="pricing-includes">
+          <li class="pricing-include-item">8 hours of sessions</li>
+          <li class="pricing-include-item">Defined monthly focus theme</li>
+          <li class="pricing-include-item">Monthly written report</li>
+          <li class="pricing-include-item">Additional sessions at regular rate</li>
+        </ul>
+        <div class="value-breakdown">
+          <div class="value-row">
+            <span class="value-label">8 × 1-hr sessions</span>
+            <span class="value-amount">C$1,080</span>
+          </div>
+          <div class="value-total">
+            <span class="value-total-label">You invest</span>
+            <span class="value-total-amount">C$1,000 — save C$80</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 MONTH -->
+      <div class="pricing-card featured reveal">
+        <div class="pricing-badge">Best Value</div>
+        <div class="pricing-tier">Deep Partnership</div>
+        <div class="pricing-name">3-Month Deep Work</div>
+        <p class="pricing-desc">Three months, one arc. A real transformation — not just conversations. The deepest container I offer.</p>
+        <div class="pricing-amount">C$3,240</div>
+        <div class="pricing-currency">
+          <span>≈ US$2,210</span>
+          <span>≈ ¥16,500 RMB</span>
+        </div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-includes-title">Everything in Monthly, plus</div>
+        <ul class="pricing-includes">
+          <li class="pricing-include-item">8 hrs/month · defined focus theme</li>
+          <li class="pricing-include-item">Monthly written report × 3</li>
+          <li class="pricing-include-item bonus">✦ 3 × 30-min monthly review sessions</li>
+          <li class="pricing-include-item bonus">✦ Cumulative 3-month synthesis report</li>
+          <li class="pricing-include-item bonus">✦ Priority booking access</li>
+          <li class="pricing-include-item bonus">✦ Flexible session splitting</li>
+        </ul>
+        <div class="value-breakdown">
+          <div class="value-row">
+            <span class="value-label">24 × 1-hr sessions</span>
+            <span class="value-amount">C$3,240</span>
+          </div>
+          <div class="value-row">
+            <span class="value-label">3 × review sessions</span>
+            <span class="value-amount">C$204</span>
+          </div>
+          <div class="value-row">
+            <span class="value-label">Synthesis report</span>
+            <span class="value-amount">C$150</span>
+          </div>
+          <div class="value-row">
+            <span class="value-label">Priority booking</span>
+            <span class="value-amount">C$50</span>
+          </div>
+          <div class="value-total">
+            <span class="value-total-label">Total value</span>
+            <span class="value-total-amount">C$3,644 — same as 24 individual sessions — bonuses are free</span>
+          </div>
+        </div>
+        <div class="pricing-savings">
+          <div class="pricing-savings-text">Priced at exactly 24 individual sessions — every bonus is a gift</div>
+        </div>
+      </div>
+
+      <!-- WHY UPGRADE -->
+      <div class="pricing-card reveal" style="background: var(--light); border-color: transparent;">
+        <div class="pricing-tier">Why Commit?</div>
+        <div class="pricing-name">The real work<br>takes time.</div>
+        <p class="pricing-desc" style="margin-bottom:1.5rem;">Single sessions create insight. A container creates change. The research backs this up.</p>
+        <ul class="pricing-includes" style="margin-bottom:1.5rem;">
+          <li class="pricing-include-item">Neuroscience shows lasting change requires repeated, spaced experience — the brain forms new patterns through consistency, not single moments</li>
+          <li class="pricing-include-item">Psychology research finds the strength of the client-practitioner relationship is the single strongest predictor of positive outcomes — that depth takes time to build</li>
+          <li class="pricing-include-item">The spacing effect confirms insight integrates better when revisited over time, not consumed in one sitting</li>
+          <li class="pricing-include-item">Structured commitment to a defined goal dramatically increases follow-through — this is what a monthly focus theme provides</li>
+        </ul>
+        <div style="border-top: 1px solid rgba(26,23,20,0.1); padding-top: 1.2rem; margin-top: 0.5rem;">
+          <p style="font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--accent); line-height: 1.6; margin-bottom: 0.4rem;">
+            真正的改变，需要时间的土壤。
+          </p>
+          <p style="font-size: 0.75rem; color: var(--muted); line-height: 1.7; font-weight: 300;">
+            一次对话可以带来顿悟，但真正的转变来自你一次次选择出现。改变，是你对自己的承诺。我的承诺，是我一直在这里。
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sessions-free reveal">
+      <div>
+        <div class="sessions-free-text">First conversation is always free.</div>
+        <div class="sessions-free-sub">20 minutes · no commitment · 免费，无需承诺</div>
+      </div>
+      <a href="#contact" class="sessions-free-btn">Book Free Call</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <h2 class="contact-title reveal">
+        Let's have<br>
+        the <em>real conversation.</em>
+      </h2>
+      <p class="contact-body reveal">
+        Tell me a little about where you are. Not the polished version — the honest one. That's where the work actually starts.
+      </p>
+      <p class="contact-cn reveal">跟我说说，你最近在经历什么，什么让你感到困扰。</p>
+      <p class="contact-body reveal" style="margin-top:0.5rem;">You can also reach me directly at <a href="mailto:jessicaychj516@gmail.com" style="color:var(--warm); text-decoration:none;">jessicaychj516@gmail.com</a> to book a session or ask any questions.</p>
+      <div class="contact-links reveal">
+        <a href="https://youtube.com/@SheThinkAloud" class="contact-link" target="_blank">
+          <span class="contact-dot"></span>YouTube · She Thinks Aloud
+        </a>
+        <a href="mailto:jessicaychj516@gmail.com" class="contact-link">
+          <span class="contact-dot"></span>jessicaychj516@gmail.com
+        </a>
+        <a href="#" class="contact-link">
+          <span class="contact-dot"></span>小红书 · JessicaYYY
+        </a>
+
+      </div>
+    </div>
+    <div class="contact-right">
+      <form action="https://formspree.io/f/REPLACE_WITH_YOUR_ID" method="POST" id="contactForm">
+      <div class="form-group reveal">
+        <label class="form-label">Your Name · 姓名</label>
+        <input type="text" name="name" class="form-input" placeholder="How should I call you?" required>
+      </div>
+      <div class="form-group reveal">
+        <label class="form-label">Email · 邮箱</label>
+        <input type="email" name="email" class="form-input" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group reveal">
+        <label class="form-label">Language · 语言偏好</label>
+        <input type="text" name="language" class="form-input" placeholder="English / Mandarin / Both">
+      </div>
+      <div class="form-group reveal">
+        <label class="form-label">Where are you right now · 你现在在哪里</label>
+        <textarea name="message" class="form-textarea" placeholder="The honest version..."></textarea>
+      </div>
+      <button type="submit" class="form-submit reveal" id="submitBtn">Book Free Call · 预约免费通话</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">She Thinks Aloud</div>
+  <div class="footer-copy">© 2026 Jessica · Vancouver, Canada · Global Practice</div>
+  <div class="footer-links">
+    <a href="#">YouTube</a>
+    <a href="#">小红书</a>
+    
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 55);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  reveals.forEach(el => observer.observe(el));
+
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    const data = new FormData(form);
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      btn.textContent = 'Sent ✓ · 已发送';
+      btn.style.background = '#2d4a3e';
+      btn.style.color = '#f6f1e9';
+      form.reset();
+    } else {
+      btn.textContent = 'Something went wrong · 请直接发邮件';
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
